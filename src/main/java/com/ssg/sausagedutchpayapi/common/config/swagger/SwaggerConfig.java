@@ -12,7 +12,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info()
-                .title("Boilerplate API Docs")
+                .title("Dutch Pay API Docs")
                 .version("1.0.0")
                 .description("API 명세서");
         return new OpenAPI()
