@@ -134,10 +134,9 @@ public class DutchPayServiceTest {
 
                 );
 
-        // when
         dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
 
-        // then
+        // when, then
         Assertions.assertThrows(DuplicateException.class, () -> {
             dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
         });

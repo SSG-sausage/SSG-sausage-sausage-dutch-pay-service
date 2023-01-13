@@ -21,7 +21,6 @@ public class DutchPayDtlInfo {
     @Schema(description = "멤버 id")
     private Long mbrId;
 
-
     @Schema(description = "멤버 정산 금액")
     private int dutchPayDtlAmt;
 
@@ -32,7 +31,7 @@ public class DutchPayDtlInfo {
     @Schema(description = "멤버 이름")
     private String mbrNM;
 
-    public static DutchPayDtlInfo of(DutchPayDtl dutchPayDtl){
+    public static DutchPayDtlInfo of(DutchPayDtl dutchPayDtl) {
         return DutchPayDtlInfo.builder()
                 .mbrId(dutchPayDtl.getMbrId())
                 .dutchPayDtlAmt(dutchPayDtl.getDutchPayDtlAmt())
@@ -40,7 +39,7 @@ public class DutchPayDtlInfo {
                 .build();
     }
 
-    public static List<DutchPayDtlInfo> of(List<DutchPayDtl> dutchPayDtlList){
+    public static List<DutchPayDtlInfo> of(List<DutchPayDtl> dutchPayDtlList) {
         return dutchPayDtlList.stream().map(DutchPayDtlInfo::of).collect(Collectors.toList());
     }
 
