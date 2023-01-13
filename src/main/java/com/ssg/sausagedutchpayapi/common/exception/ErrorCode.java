@@ -24,6 +24,9 @@ public enum ErrorCode {
     VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, "잘못된 Enum 값 입니다."),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, "필수적인 요청 값이 입력되지 않았습니다."),
     VALIDATION_WRONG_TYPE_EXCEPTION(BAD_REQUEST, "잘못된 타입이 입력되었습니다."),
+    DUPLICATE_EXCEPTION(BAD_REQUEST, "중복된 데이터가 존재합니다."),
+
+    DUPLICATE_DUTCH_PAY_EXCEPTION(BAD_REQUEST, "중복된 함께쓱정산 데이터가 존재합니다."),
 
     /**
      * 401 UnAuthorized
@@ -34,6 +37,8 @@ public enum ErrorCode {
      * 403 Forbidden
      */
     FORBIDDEN_EXCEPTION(FORBIDDEN, "허용하지 않는 요청입니다."),
+    FORBIDDEN_DUTCH_PAY_CREATE_EXCEPTION(FORBIDDEN, "함께쓱정산 생성 권한이 없습니다."),
+
 
     /**
      * 404 Not Found
@@ -58,8 +63,7 @@ public enum ErrorCode {
     /**
      * 503 Service UnAvailable
      */
-    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
-    ;
+    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!");
 
     private final ErrorStatusCode statusCode;
     private final String message;
