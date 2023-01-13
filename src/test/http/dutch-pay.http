@@ -1,0 +1,42 @@
+### 함께쓱정산 생성 - 정상 생성
+POST {{host}}/api/cart-share-order/1/dutch-pay
+mbrId:1
+
+> {%
+  client.test("함께쓱정산 생성 성공", function () {
+    client.assert(response.status === 201);
+    client.assert(response.body["status"] === 201);
+    client.assert(response.body["success"] === true);
+    client.assert(response.body["data"] === null);
+
+  });
+%}
+
+### 함께쓱정산 생성 - 중복 생성 (정상 생성 실행 후)
+POST {{host}}/api/cart-share-order/1/dutch-pay
+mbrId:1
+
+> {%
+  client.test("함께쓱정산 중복 생성 에러", function () {
+    client.assert(response.status === 400);
+    client.assert(response.body["status"] === 400);
+    client.assert(response.body["success"] === false);
+    client.assert(response.body["message"] === "중복된 함께쓱정산 데이터가 존재합니다.");
+
+  });
+%}
+
+### 함께쓱정산 생성 - 해당 함께 장보기의 마스터가 아닌 경우
+POST {{host}}/api/cart-share-order/1/dutch-pay
+mbrId:2
+
+> {%
+  client.test("함꼐쓱정산 생성 권한 에러", function () {
+    client.assert(response.status === 403);
+    client.assert(response.body["status"] === 403);
+    client.assert(response.body["success"] === false);
+    client.assert(response.body["message"] === "함께쓱정산 생성 권한이 없습니다.");
+
+  });
+%}
+
