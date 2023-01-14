@@ -42,7 +42,7 @@ public class DutchPayService {
 
     private void validateMaster(Long mbrId, Long masterId, Long cartShareOrdId) {
 
-        if (mbrId != masterId) {
+        if (!mbrId.equals(masterId)) {
             throw new ForbiddenException(
                     String.format("해당 공유 장바구니 주문에 대한 함께쓱정산 생성 권한이 없습니다.", cartShareOrdId),
                     ErrorCode.FORBIDDEN_DUTCH_PAY_CREATE_EXCEPTION);
