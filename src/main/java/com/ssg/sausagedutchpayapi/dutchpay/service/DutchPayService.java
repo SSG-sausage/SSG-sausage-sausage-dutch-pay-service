@@ -2,10 +2,9 @@ package com.ssg.sausagedutchpayapi.dutchpay.service;
 
 import com.ssg.sausagedutchpayapi.common.client.internal.InternalOrderApiClient;
 import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrderFindCartShareResponse;
-import com.ssg.sausagedutchpayapi.common.exception.DuplicateException;
+import com.ssg.sausagedutchpayapi.common.exception.ConflictException;
 import com.ssg.sausagedutchpayapi.common.exception.ErrorCode;
 import com.ssg.sausagedutchpayapi.common.exception.ForbiddenException;
-import com.ssg.sausagedutchpayapi.dutchpay.dto.response.DutchPaySaveResponse;
 import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPay;
 import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPayDtl;
 import com.ssg.sausagedutchpayapi.dutchpay.repository.DutchPayDtlRepository;
@@ -25,7 +24,7 @@ public class DutchPayService {
     private final InternalOrderApiClient internalOrderApiClient;
 
     @Transactional
-    public DutchPaySaveResponse saveDutchPay(Long mbrId, Long cartShareOrdId) {
+    public void saveDutchPay(Long mbrId, Long cartShareOrdId) {
 
         OrderFindCartShareResponse response = internalOrderApiClient.findCartShareByCartShareOrdId(
                 cartShareOrdId).getBody().getData();
@@ -39,8 +38,6 @@ public class DutchPayService {
         dutchPayDtlRepository.saveAll(response.getMbrIdList().stream().map(id -> {
             return DutchPayDtl.newInstance(dutchPay, id);
         }).collect(Collectors.toList()));
-
-        return DutchPaySaveResponse.of(dutchPay);
     }
 
     private void validateMaster(Long mbrId, Long masterId, Long cartShareOrdId) {
@@ -55,9 +52,9 @@ public class DutchPayService {
     private void validateDuplicateDutchPay(Long cartShareOrdId) {
 
         dutchPayRepository.findByCartShareOrdId(cartShareOrdId).ifPresent(x -> {
-            throw new DuplicateException(
+            throw new ConflictException(
                     String.format("해당 공유 장바구니 주문(ID:%s)에 대한 더치페이가 존재합니다.", cartShareOrdId),
-                    ErrorCode.DUPLICATE_DUTCH_PAY_EXCEPTION);
+                    ErrorCode.CONFLICT_DUTCH_PAY_EXCEPTION);
         });
 
     }

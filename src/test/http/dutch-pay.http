@@ -18,8 +18,8 @@ mbrId:1
 
 > {%
   client.test("함께쓱정산 중복 생성 에러", function () {
-    client.assert(response.status === 400);
-    client.assert(response.body["status"] === 400);
+    client.assert(response.status === 409);
+    client.assert(response.body["status"] === 409);
     client.assert(response.body["success"] === false);
     client.assert(response.body["message"] === "중복된 함께쓱정산 데이터가 존재합니다.");
 

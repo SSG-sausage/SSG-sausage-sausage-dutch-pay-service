@@ -1,8 +1,7 @@
 package com.ssg.sausagedutchpayapi.dutchpay.service;
 
-import com.ssg.sausagedutchpayapi.common.exception.DuplicateException;
+import com.ssg.sausagedutchpayapi.common.exception.ConflictException;
 import com.ssg.sausagedutchpayapi.common.exception.ForbiddenException;
-import com.ssg.sausagedutchpayapi.dutchpay.dto.response.DutchPaySaveResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,23 +14,6 @@ public class DutchPayServiceTest {
 
     @Autowired
     private DutchPayService dutchPayService;
-
-    @Test
-    @Transactional
-    @DisplayName("함께쓱정산 정상 생성")
-    public void testSaveDutchPaySuccess() {
-
-        // given
-        Long mbrId = 1L;
-        Long cartShareOrdId = 2L;
-
-        // when
-        DutchPaySaveResponse response = dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
-
-        // then
-        Assertions.assertEquals(1L, response.getDutchPayId());
-
-    }
 
     @Test
     @Transactional
@@ -61,7 +43,7 @@ public class DutchPayServiceTest {
         dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
 
         // when, then
-        Assertions.assertThrows(DuplicateException.class, () -> {
+        Assertions.assertThrows(ConflictException.class, () -> {
             dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
         });
 
