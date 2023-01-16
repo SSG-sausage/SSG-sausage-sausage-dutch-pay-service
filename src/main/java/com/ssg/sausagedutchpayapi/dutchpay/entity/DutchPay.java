@@ -24,12 +24,16 @@ public class DutchPay extends BaseEntity {
     @Column(name = "CART_SHARE_ORD_ID")
     private Long cartShareOrdId;
 
+    @Column(name = "DUTCH_PAY_RMD")
+    private int dutchPayRmd;
+
     @OneToMany(mappedBy = "dutchPay", cascade = CascadeType.ALL)
     private List<DutchPayDtl> dutchPayDtlList;
 
     public static DutchPay newInstance(Long cartShareOrdId) {
         return DutchPay.builder()
                 .cartShareOrdId(cartShareOrdId)
+                .dutchPayRmd(0)
                 .build();
     }
 
