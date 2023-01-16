@@ -1,0 +1,31 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dutchpay?useSSL=false&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnection=true&serverTimezone=Asia/Seoul
+    username: sausage
+    password: sausage
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+      mode: ALWAYS
+
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://127.0.0.1:8761/eureka
+

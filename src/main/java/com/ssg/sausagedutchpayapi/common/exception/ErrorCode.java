@@ -34,6 +34,7 @@ public enum ErrorCode {
      * 403 Forbidden
      */
     FORBIDDEN_EXCEPTION(FORBIDDEN, "허용하지 않는 요청입니다."),
+    FORBIDDEN_DUTCH_PAY_CREATE_EXCEPTION(FORBIDDEN, "함께쓱정산 생성 권한이 없습니다."),
 
     /**
      * 404 Not Found
@@ -44,6 +45,9 @@ public enum ErrorCode {
      * 409 Conflict
      */
     CONFLICT_EXCEPTION(CONFLICT, "이미 존재합니다."),
+
+    CONFLICT_DUTCH_PAY_EXCEPTION(CONFLICT, "중복된 함께쓱정산 데이터가 존재합니다."),
+
 
     /**
      * 500 Internal Server Exception
@@ -58,8 +62,7 @@ public enum ErrorCode {
     /**
      * 503 Service UnAvailable
      */
-    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
-    ;
+    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!");
 
     private final ErrorStatusCode statusCode;
     private final String message;
