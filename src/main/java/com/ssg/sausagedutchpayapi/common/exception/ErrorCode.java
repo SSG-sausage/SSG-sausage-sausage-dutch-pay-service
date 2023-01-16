@@ -22,6 +22,7 @@ public enum ErrorCode {
      */
     VALIDATION_EXCEPTION(BAD_REQUEST, "잘못된 요청입니다."),
     VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, "잘못된 Enum 값 입니다."),
+    VALIDATION_DUTCH_PAY_OPT_CD_VALUE_EXCEPTION(BAD_REQUEST, "잘못된 함께쓱정산 옵션 코드 값 입니다."),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, "필수적인 요청 값이 입력되지 않았습니다."),
     VALIDATION_WRONG_TYPE_EXCEPTION(BAD_REQUEST, "잘못된 타입이 입력되었습니다."),
 
@@ -35,19 +36,21 @@ public enum ErrorCode {
      */
     FORBIDDEN_EXCEPTION(FORBIDDEN, "허용하지 않는 요청입니다."),
     FORBIDDEN_DUTCH_PAY_CREATE_EXCEPTION(FORBIDDEN, "함께쓱정산 생성 권한이 없습니다."),
+    FORBIDDEN_DUTCH_PAY_UPDATE_EXCEPTION(FORBIDDEN, "함께쓱정산 수정 권한이 없습니다."),
 
     /**
      * 404 Not Found
      */
     NOT_FOUND_EXCEPTION(NOT_FOUND, "존재하지 않습니다."),
+    NOT_FOUND_DUTCH_PAY_EXCEPTION(NOT_FOUND, "존재하지 않는 함께쓱정산 입니다."),
+    NOT_FOUND_DUTCH_PAY_DTL_EXCEPTION(NOT_FOUND, "존재하지 않는 함께쓱정산세부 입니다."),
+
 
     /**
      * 409 Conflict
      */
     CONFLICT_EXCEPTION(CONFLICT, "이미 존재합니다."),
-
     CONFLICT_DUTCH_PAY_EXCEPTION(CONFLICT, "중복된 함께쓱정산 데이터가 존재합니다."),
-
 
     /**
      * 500 Internal Server Exception

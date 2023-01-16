@@ -10,22 +10,26 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
-
 public class DutchPayFindResponse {
 
-    @Schema(description = "더치페이 id")
+    @Schema(description = "함께쓱정산 id")
     private Long dutchPayId;
 
     @Schema(description = "공유 장바구니 주문 id")
     private Long cartShareOrdId;
 
-    private List<DutchPayDtlInfo> dutchPayDtlInfoList;
+    @Schema(description = "함께쓱정산 나머지")
+    private int dutchPayRmd;
 
-    public static DutchPayFindResponse of(DutchPay dutchPay) {
+    private List<DutchPayDtlFindInfo> dutchPayDtlFindInfoList;
+
+    public static DutchPayFindResponse of(DutchPay dutchPay,
+            List<DutchPayDtlFindInfo> dutchPayDtlFindInfoList) {
         return DutchPayFindResponse.builder()
                 .dutchPayId(dutchPay.getDutchPayId())
                 .cartShareOrdId(dutchPay.getCartShareOrdId())
-                .dutchPayDtlInfoList(DutchPayDtlInfo.of(dutchPay.getDutchPayDtlList()))
+                .dutchPayRmd(dutchPay.getDutchPayRmd())
+                .dutchPayDtlFindInfoList(dutchPayDtlFindInfoList)
                 .build();
     }
 }

@@ -32,13 +32,21 @@ public class DutchPayDtl extends BaseEntity {
     @Column(name = "DUTCH_PAY_CMPL_YN")
     private boolean dutchPayCmplYn;
 
-    public static DutchPayDtl newInstance(DutchPay dutchPay, Long mbrId){
+    public static DutchPayDtl newInstance(DutchPay dutchPay, Long mbrId) {
         return DutchPayDtl.builder()
                 .dutchPay(dutchPay)
                 .mbrId(mbrId)
                 .dutchPayDtlAmt(0)
                 .dutchPayCmplYn(false)
                 .build();
+    }
+
+    public void updateDutchPayDtlAmt(int dutchPayDtlAmt) {
+        this.dutchPayDtlAmt = dutchPayDtlAmt;
+    }
+
+    public void updateDutchPayCmplYn(){
+        this.dutchPayCmplYn = !this.isDutchPayCmplYn();
     }
 
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface InternalMemberApiClient {
 
-    @GetMapping("/member/api/mbr")
+    @GetMapping("/mbr-list")
     ResponseEntity<SuccessResponse<HashMap<Long, MbrFindInfo>>> findMbrList(
             @RequestParam List<Long> mbrIdList);
 

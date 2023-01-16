@@ -11,12 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class OrdFindCartShareResponse {
+public class OrdFindCartShareOrdShppInfo {
 
-    private Long cartShareId;
-
-    private Long masterId;
+    private int shppCst;
 
     private List<Long> mbrIdList;
+
+    private int shppQuot;
+
+    public void setShppQuot(int shppQuot) {
+        this.shppQuot = shppQuot;
+    }
 
 }

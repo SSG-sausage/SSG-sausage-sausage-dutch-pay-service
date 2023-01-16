@@ -1,6 +1,5 @@
 package com.ssg.sausagedutchpayapi.common.client.internal.dto.response;
 
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class OrdFindCartShareResponse {
+public class OrdFindCartShareOrdInfo {
 
-    private Long cartShareId;
+    private Long mbrId;
 
-    private Long masterId;
-
-    private List<Long> mbrIdList;
+    // 배송비 제외 주문 금액
+    private int ordAmt;
 
 }
