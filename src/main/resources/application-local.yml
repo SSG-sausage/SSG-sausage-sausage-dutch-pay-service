@@ -5,7 +5,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dutchpay?useSSL=false&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnection=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3309/dutch_pay?useSSL=false&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnection=true&serverTimezone=Asia/Seoul
     username: sausage
     password: sausage
 
