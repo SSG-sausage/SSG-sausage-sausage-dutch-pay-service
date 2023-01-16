@@ -4,7 +4,8 @@ server:
     encoding:
       charset: UTF-8
       force: true
-
 spring:
   profiles:
     default: local
+  application:
+    name: SAUSAGE-DUTCH-PAY-API
