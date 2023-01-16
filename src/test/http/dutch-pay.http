@@ -40,3 +40,30 @@ mbrId:2
   });
 %}
 
+### 함께쓱정산 조회 - 정상 조회
+GET {{host}}/api/cart-share-order/1/dutch-pay
+mbrId:1
+
+> {%
+  client.test("함께쓱정산 생성 성공", function () {
+    client.assert(response.status === 200);
+    client.assert(response.body["status"] === 200);
+    client.assert(response.body["success"] === true);
+
+  });
+%}
+
+
+### 함께쓱정산 조회 - 존재하지 않는 데이터 조회
+GET {{host}}/api/cart-share-order/3/dutch-pay
+mbrId:1
+
+> {%
+  client.test("함께쓱정산 생성 성공", function () {
+    client.assert(response.status === 404);
+    client.assert(response.body["status"] === 404);
+    client.assert(response.body["success"] === false);
+    client.assert(response.body["message"] === "존재하지 않는 함께쓱정산 입니다.");
+
+  });
+%}
