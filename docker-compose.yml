@@ -28,6 +28,20 @@ services:
       - "mysqld"
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
+  mysql_cart_share:
+    container_name: mysql_cart_share
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: "sausage"
+      MYSQL_PASSWORD: "sausage"
+      MYSQL_DATABASE: "cart_share"
+    ports:
+      - "3308:3306"
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
   mysql_order:
     container_name: mysql_order
     image: mysql/mysql-server:5.7
@@ -37,7 +51,7 @@ services:
       MYSQL_PASSWORD: "sausage"
       MYSQL_DATABASE: "order"
     ports:
-      - "3308:3306"
+      - "3309:3306"
     command:
       - "mysqld"
       - "--character-set-server=utf8mb4"
@@ -51,7 +65,7 @@ services:
       MYSQL_PASSWORD: "sausage"
       MYSQL_DATABASE: "dutch_pay"
     ports:
-      - "3309:3306"
+      - "3310:3306"
     command:
       - "mysqld"
       - "--character-set-server=utf8mb4"
