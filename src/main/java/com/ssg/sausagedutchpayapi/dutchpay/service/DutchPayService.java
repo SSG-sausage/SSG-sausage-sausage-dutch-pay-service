@@ -79,13 +79,19 @@ public class DutchPayService {
         );
     }
 
+    public Object calcDutchPayByCartShareOrdId(Long cartShareOrdId, DutchPayOptCd dutchPayOptCd) {
+        switch (dutchPayOptCd){
+
+        }
+    }
+
     public DutchPayCalcResponse calcDutchPay(Long dutchPayId, DutchPayOptCd dutchPayOptCd) {
 
         DutchPay dutchPay = findDutchPayById(dutchPayId);
         switch (dutchPayOptCd) {
-            case DIVIDE_ALL:
+            case DIVIDE_BY_N:
                 return calcDivideAll(dutchPay);
-            case PERSONAL:
+            case BY_SECTION:
                 return calcPersonal(dutchPay);
         }
         throw new ValidationException(String.format("%s는 존재하지 않는 함께쓱정산 옵션 입니다.", dutchPayOptCd),
@@ -214,4 +220,6 @@ public class DutchPayService {
         DutchPayDtl dutchPayDtl = findDutchPayDtlByMbrIdAndDutchPayId(mbrId, dutchPayId);
         dutchPayDtl.updateDutchPayCmplYn();
     }
+
+
 }

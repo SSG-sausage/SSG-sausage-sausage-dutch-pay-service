@@ -37,4 +37,8 @@ public class DutchPay extends BaseEntity {
                 .build();
     }
 
+    public void setDutchPayRmd(int dutchPayRmd){
+        this.dutchPayRmd = dutchPayRmd;
+    }
+
 }

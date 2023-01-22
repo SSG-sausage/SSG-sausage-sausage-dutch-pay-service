@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "DutchPay", description = "함께쓱정산")
+@Tag(name = "DutchPay", description = "정산")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class DutchPayController {
 
     private final DutchPayService dutchPayService;
 
-    @Operation(summary = "함께쓱정산 생성", responses = {
+    @Operation(summary = "정산 생성", responses = {
             @ApiResponse(responseCode = "201", description = "함께쓱정산 생성 성공입니다."),
             @ApiResponse(responseCode = "403", description = "해당 주문에 대한 함께쓱정산 생성 권한이 없습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "409", description = "해당 주문에 대한 함께쓱정산 데이터가 이미 존재합니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -42,7 +42,7 @@ public class DutchPayController {
         return SuccessResponse.CREATED;
     }
 
-    @Operation(summary = "함께쓱정산 조회", responses = {
+    @Operation(summary = "정산 조회", responses = {
             @ApiResponse(responseCode = "200", description = "함께쓱정산 조회 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -54,7 +54,7 @@ public class DutchPayController {
                 dutchPayService.findDutchPay(cartShareOrdId));
     }
 
-    @Operation(summary = "함께쓱정산 금액 수정", responses = {
+    @Operation(summary = "정산 금액 수정", responses = {
             @ApiResponse(responseCode = "200", description = "함께쓱정산 조회 성공입니다."),
             @ApiResponse(responseCode = "403", description = "함께쓱정산 수정 권한이 없습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -69,9 +69,20 @@ public class DutchPayController {
         return SuccessResponse.OK;
     }
 
-    @Operation(summary = "함께쓱정산 금액 계산", responses = {
-            @ApiResponse(responseCode = "200", description = "함께쓱정산 조회 성공입니다."),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @Operation(summary = "정산 생성 전 정산 금액 계산", responses = {
+            @ApiResponse(responseCode = "200", description = "정산 조회 성공입니다."),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @GetMapping("/dutch-pay/cart-share-ord/{cartShareOrdId}/calc")
+    public ResponseEntity<SuccessResponse<DutchPayCalcResponse>> calcDutchPayByCartShareOrdId(
+            @PathVariable Long cartShareOrdId, @RequestParam DutchPayOptCd dutchPayOptCd ) {
+        return SuccessResponse.success(SuccessCode.OK_SUCCESS,
+                dutchPayService.calcDutchPayByCartShareOrdId(cartShareOrdId, dutchPayOptCd));
+    }
+
+    @Operation(summary = "정산 금액 계산", responses = {
+            @ApiResponse(responseCode = "200", description = "정산 조회 성공입니다."),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @GetMapping("/dutch-pay/{dutchPayId}/calc")
@@ -81,7 +92,7 @@ public class DutchPayController {
                 dutchPayService.calcDutchPay(dutchPayId, dutchPayOptCd));
     }
 
-    @Operation(summary = "함께쓱정산 멤버 완료여부 변경", responses = {
+    @Operation(summary = "정산 멤버 완료여부 변경", responses = {
             @ApiResponse(responseCode = "200", description = "함께쓱정산 멤버 완료여부 변경 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),

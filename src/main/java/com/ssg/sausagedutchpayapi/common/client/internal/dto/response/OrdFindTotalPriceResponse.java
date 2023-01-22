@@ -14,4 +14,5 @@ public class OrdFindTotalPriceResponse {
 
     private int totalPrice;
 
+
 }

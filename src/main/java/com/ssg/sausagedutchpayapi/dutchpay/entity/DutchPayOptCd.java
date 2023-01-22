@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum DutchPayOptCd {
 
-    DIVIDE_ALL("전체 금액 1/N 정산"),
+    DIVIDE_BY_N("전체 1/N"),
 
-    PERSONAL("섹션별 정산");
+    BY_SECTION("섹션별 정산");
 
     private final String description;
 
