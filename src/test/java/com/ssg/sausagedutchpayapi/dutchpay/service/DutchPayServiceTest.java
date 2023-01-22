@@ -2,6 +2,7 @@ package com.ssg.sausagedutchpayapi.dutchpay.service;
 
 import com.ssg.sausagedutchpayapi.common.exception.ConflictException;
 import com.ssg.sausagedutchpayapi.common.exception.ForbiddenException;
+import com.ssg.sausagedutchpayapi.dutchpay.dto.request.DutchPaySaveRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,34 +18,19 @@ public class DutchPayServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("함께쓱정산 생성 권한 없음")
-    public void testSaveDutchPayForbidden() {
-
-        // given
-        Long mbrId = 2L;
-        Long cartShareOrdId = 2L;
-
-        // when , then
-        Assertions.assertThrows(ForbiddenException.class, () -> {
-            dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
-        });
-
-    }
-
-    @Test
-    @Transactional
     @DisplayName("함께쓱정산 중복 생성")
     public void testSaveDutchPayDuplicate() {
 
         // given
-        Long mbrId = 1L;
-        Long cartShareOrdId = 2L;
+        DutchPaySaveRequest request = DutchPaySaveRequest.builder()
+                .cartShareOrdId(2L)
+                .build();
 
-        dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
+        dutchPayService.saveDutchPay(request);
 
         // when, then
         Assertions.assertThrows(ConflictException.class, () -> {
-            dutchPayService.saveDutchPay(mbrId, cartShareOrdId);
+            dutchPayService.saveDutchPay(request);
         });
 
     }

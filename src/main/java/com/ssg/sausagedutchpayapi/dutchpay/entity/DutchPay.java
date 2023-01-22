@@ -24,6 +24,12 @@ public class DutchPay extends BaseEntity {
     @Column(name = "CART_SHARE_ORD_ID")
     private Long cartShareOrdId;
 
+    @Column(name = "DUTCH_PAY_ST_YN")
+    private boolean dutchPayStYn;
+
+    @Column(name = "PAYMT_AMT")
+    private int paymtAmt;
+
     @Column(name = "DUTCH_PAY_RMD")
     private int dutchPayRmd;
 
@@ -33,11 +39,13 @@ public class DutchPay extends BaseEntity {
     public static DutchPay newInstance(Long cartShareOrdId) {
         return DutchPay.builder()
                 .cartShareOrdId(cartShareOrdId)
+                .dutchPayStYn(true)
                 .dutchPayRmd(0)
+                .paymtAmt(0)
                 .build();
     }
 
-    public void setDutchPayRmd(int dutchPayRmd){
+    public void setDutchPayRmd(int dutchPayRmd) {
         this.dutchPayRmd = dutchPayRmd;
     }
 

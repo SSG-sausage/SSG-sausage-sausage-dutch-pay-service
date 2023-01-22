@@ -6,6 +6,8 @@ CREATE TABLE `DUTCH_PAY`
 (
     `DUTCH_PAY_ID`      bigint   NOT NULL AUTO_INCREMENT,
     `CART_SHARE_ORD_ID` bigint   NOT NULL,
+    `DUTCH_PAY_ST_YN`   boolean  NOT NULL,
+    `PAYMT_AMT`         int      NOT NULL,
     `DUTCH_PAY_RMD`     int      NOT NULL,
     `REG_DTS`           datetime NOT NULL,
     `REGPE_ID`          bigint NULL,

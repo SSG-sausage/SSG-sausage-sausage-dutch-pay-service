@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 public class DutchPayDtlUpdateInfo {
 
     @Schema(description = "멤버 id", requiredMode = RequiredMode.REQUIRED)
