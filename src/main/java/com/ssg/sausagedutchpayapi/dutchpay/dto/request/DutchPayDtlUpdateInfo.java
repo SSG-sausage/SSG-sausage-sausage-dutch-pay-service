@@ -14,10 +14,19 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DutchPayDtlUpdateInfo {
 
-    @Schema(description = "멤버 id", requiredMode = RequiredMode.REQUIRED)
+    @Schema(description = "멤버 id")
     private Long mbrId;
 
-    @Schema(description = "멤버 정산 금액", requiredMode = RequiredMode.REQUIRED)
+    @Schema(description = "멤버 정산 금액")
     private int dutchPayDtlAmt;
+
+    @Schema(description = "배송비")
+    private int shppAmt;
+
+    @Schema(description = "공동 금액")
+    private int commAmt;
+
+    @Schema(description = "개별 금액")
+    private int prAmt;
 
 }

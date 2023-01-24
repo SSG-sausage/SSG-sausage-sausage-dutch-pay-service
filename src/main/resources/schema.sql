@@ -4,14 +4,17 @@ DROP TABLE IF EXISTS `DUTCH_PAY_NOTI`;
 
 CREATE TABLE `DUTCH_PAY`
 (
-    `DUTCH_PAY_ID`      bigint   NOT NULL AUTO_INCREMENT,
-    `CART_SHARE_ORD_ID` bigint   NOT NULL,
-    `DUTCH_PAY_ST_YN`   boolean  NOT NULL,
-    `PAYMT_AMT`         int      NOT NULL,
-    `DUTCH_PAY_RMD`     int      NOT NULL,
-    `REG_DTS`           datetime NOT NULL,
+    `DUTCH_PAY_ID`      bigint      NOT NULL AUTO_INCREMENT,
+    `CART_SHARE_ORD_ID` bigint      NOT NULL,
+    `MASTR_MBR_ID`      bigint      NOT NULL,
+    `DUTCH_PAY_OPT_CD`  varchar(30) NOT NULL,
+    `DUTCH_PAY_ST_YN`   boolean     NOT NULL,
+    `PAYMT_AMT`         int         NOT NULL,
+    `DUTCH_PAY_RMD`     int         NOT NULL,
+    `DUTCH_PAY_AMT`     int         NOT NULL,
+    `REG_DTS`           datetime    NOT NULL,
     `REGPE_ID`          bigint NULL,
-    `MOD_DTS`           datetime NOT NULL,
+    `MOD_DTS`           datetime    NOT NULL,
     `MODPE_ID`          bigint NULL,
     PRIMARY KEY (`DUTCH_PAY_ID`)
 );
@@ -23,6 +26,9 @@ CREATE TABLE `DUTCH_PAY_DTL`
     `DUTCH_PAY_ID`      bigint   NOT NULL,
     `DUTCH_PAY_DTL_AMT` int      NOT NULL,
     `DUTCH_PAY_CMPL_YN` boolean  NOT NULL,
+    `SHPP_AMT`          int NULL,
+    `COMM_AMT`          int NULL,
+    `PR_AMT`            int NULL,
     `REG_DTS`           datetime NOT NULL,
     `REGPE_ID`          bigint NULL,
     `MOD_DTS`           datetime NOT NULL,

@@ -13,11 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrdFindCartShareOrdResponse {
 
-    private int commAmt;
+    private Long cartShareId;
 
-    List<OrdFindCartShareOrdShppInfo> shppInfoList;
+    private Long mastrMbrId;
 
-    List<OrdFindCartShareOrdInfo> ordInfoList;
+    private List<Long> mbrIdList;
 
+    private int paymtAmt;
 
 }

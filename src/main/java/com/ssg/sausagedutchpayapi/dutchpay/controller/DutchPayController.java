@@ -39,23 +39,22 @@ public class DutchPayController {
     }
 
     @Operation(summary = "정산 조회", responses = {@ApiResponse(responseCode = "200", description = "함께쓱정산 조회 성공입니다."),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
-    @GetMapping("/cart-share-order/{cartShareOrdId}/dutch-pay")
-    public ResponseEntity<SuccessResponse<DutchPayFindResponse>> findDutchPay(@PathVariable Long cartShareOrdId) {
-        return SuccessResponse.success(SuccessCode.OK_SUCCESS, dutchPayService.findDutchPay(cartShareOrdId));
+    @GetMapping("/dutch-pay/{dutchPayId}")
+    public ResponseEntity<SuccessResponse<DutchPayFindResponse>> findDutchPay(
+            @Parameter(in = ParameterIn.HEADER) @MbrId Long mbrId, @PathVariable Long dutchPayId) {
+        return SuccessResponse.success(SuccessCode.OK_SUCCESS, dutchPayService.findDutchPay(mbrId, dutchPayId));
     }
 
-    @Operation(summary = "정산 금액 수정", responses = {@ApiResponse(responseCode = "200", description = "함께쓱정산 조회 성공입니다."),
-            @ApiResponse(responseCode = "403", description = "함께쓱정산 수정 권한이 없습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @Operation(summary = "정산 수정", responses = {@ApiResponse(responseCode = "200", description = "정산 조회 성공입니다."),
+            @ApiResponse(responseCode = "403", description = "정산 수정 권한이 없습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
     @PutMapping("/dutch-pay/{dutchPayId}")
-    public ResponseEntity<SuccessResponse<String>> updateDutchPayDtl(
-            @Parameter(in = ParameterIn.HEADER) @MbrId Long mbrId, @PathVariable Long dutchPayId,
-            @RequestBody DutchPayDtlUpdateRequest request) {
-
-        dutchPayService.updateDutchPayDtl(mbrId, dutchPayId, request);
+    public ResponseEntity<SuccessResponse<String>> updateDutchPay(@Parameter(in = ParameterIn.HEADER) @MbrId Long mbrId,
+            @PathVariable Long dutchPayId, @RequestBody DutchPayDtlUpdateRequest request) {
+        dutchPayService.updateDutchPay(mbrId, dutchPayId, request);
         return SuccessResponse.OK;
     }
 
@@ -63,19 +62,20 @@ public class DutchPayController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
     @GetMapping("/dutch-pay/{dutchPayId}/calc")
-    public ResponseEntity<SuccessResponse<DutchPayCalcResponse>> calcDutchPay(@PathVariable Long dutchPayId,
-            @RequestParam DutchPayOptCd dutchPayOptCd) {
-        return SuccessResponse.success(SuccessCode.OK_SUCCESS, dutchPayService.calcDutchPay(dutchPayId, dutchPayOptCd));
+    public ResponseEntity<SuccessResponse<DutchPayCalcResponse>> calcDutchPay(@PathVariable Long dutchPayId) {
+        return SuccessResponse.success(SuccessCode.OK_SUCCESS, dutchPayService.calcDutchPayBySection(dutchPayId));
     }
 
     @Operation(summary = "정산 멤버 완료여부 변경", responses = {
-            @ApiResponse(responseCode = "200", description = "함께쓱정산 멤버 완료여부 변경 성공입니다."),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 함께쓱정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "200", description = "정산 멤버 완료여부 변경 성공입니다."),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
-    @PatchMapping("/dutch-pay/{dutchPayId}/mbr-id/{mbrId}/cmpl")
-    public ResponseEntity<SuccessResponse<String>> updateCmplYn(@PathVariable Long dutchPayId,
-            @PathVariable Long mbrId) {
-        dutchPayService.updateCmplYn(dutchPayId, mbrId);
+    @PatchMapping("/dutch-pay/{dutchPayId}/mbr-id/{dtlMbrId}/cmpl")
+    public ResponseEntity<SuccessResponse<String>> updateCmplYn(
+            @Parameter(in = ParameterIn.HEADER) @MbrId Long mbrId,
+            @PathVariable Long dutchPayId,
+            @PathVariable Long dtlMbrId) {
+        dutchPayService.updateCmplYn(mbrId, dutchPayId, dtlMbrId);
         return SuccessResponse.OK;
     }
 

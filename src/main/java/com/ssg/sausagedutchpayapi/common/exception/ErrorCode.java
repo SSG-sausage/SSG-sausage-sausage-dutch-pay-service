@@ -35,22 +35,21 @@ public enum ErrorCode {
      * 403 Forbidden
      */
     FORBIDDEN_EXCEPTION(FORBIDDEN, "허용하지 않는 요청입니다."),
-    FORBIDDEN_DUTCH_PAY_CREATE_EXCEPTION(FORBIDDEN, "함께쓱정산 생성 권한이 없습니다."),
-    FORBIDDEN_DUTCH_PAY_UPDATE_EXCEPTION(FORBIDDEN, "함께쓱정산 수정 권한이 없습니다."),
+    FORBIDDEN_DUTCH_PAY_UPDATE_EXCEPTION(FORBIDDEN, "정산 수정 권한이 없습니다."),
 
     /**
      * 404 Not Found
      */
     NOT_FOUND_EXCEPTION(NOT_FOUND, "존재하지 않습니다."),
-    NOT_FOUND_DUTCH_PAY_EXCEPTION(NOT_FOUND, "존재하지 않는 함께쓱정산 입니다."),
-    NOT_FOUND_DUTCH_PAY_DTL_EXCEPTION(NOT_FOUND, "존재하지 않는 함께쓱정산세부 입니다."),
+    NOT_FOUND_DUTCH_PAY_EXCEPTION(NOT_FOUND, "존재하지 않는 정산 입니다."),
+    NOT_FOUND_DUTCH_PAY_DTL_EXCEPTION(NOT_FOUND, "존재하지 않는 정산세부 입니다."),
 
 
     /**
      * 409 Conflict
      */
     CONFLICT_EXCEPTION(CONFLICT, "이미 존재합니다."),
-    CONFLICT_DUTCH_PAY_EXCEPTION(CONFLICT, "중복된 함께쓱정산 데이터가 존재합니다."),
+    CONFLICT_DUTCH_PAY_EXCEPTION(CONFLICT, "중복된 정산 데이터가 존재합니다."),
 
     /**
      * 500 Internal Server Exception

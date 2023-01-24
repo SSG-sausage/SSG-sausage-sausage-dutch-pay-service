@@ -30,13 +30,34 @@ public class DutchPayDtlFindInfo {
     @Schema(description = "멤버 이름")
     private String mbrNm;
 
-    public static DutchPayDtlFindInfo of(DutchPayDtl dutchPayDtl, String mbrNm) {
+    @Schema(description = "본인여부")
+    private boolean meYn;
+
+    @Schema(description = "마스터여부")
+    private boolean mastrYn;
+
+    @Schema(description = "배송비")
+    private int shppAmt;
+
+    @Schema(description = "공동 금액")
+    private int commAmt;
+
+    @Schema(description = "개별 금액")
+    private int prAmt;
+
+    public static DutchPayDtlFindInfo of(DutchPayDtl dutchPayDtl, String mbrNm, Long mbrId, Long mastrId) {
         return DutchPayDtlFindInfo.builder()
                 .mbrId(dutchPayDtl.getMbrId())
                 .dutchPayDtlAmt(dutchPayDtl.getDutchPayDtlAmt())
                 .dutchPayCmplYn(dutchPayDtl.isDutchPayCmplYn())
                 .mbrNm(mbrNm)
+                .meYn(mbrId.equals(dutchPayDtl.getMbrId()))
+                .mastrYn(dutchPayDtl.getMbrId().equals(mastrId))
+                .shppAmt(dutchPayDtl.getShppAmt())
+                .commAmt(dutchPayDtl.getCommAmt())
+                .prAmt(dutchPayDtl.getPrAmt())
                 .build();
+
     }
 
 

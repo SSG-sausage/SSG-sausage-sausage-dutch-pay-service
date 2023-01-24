@@ -8,9 +8,8 @@ import static org.mockito.BDDMockito.given;
 
 import com.ssg.sausagedutchpayapi.common.client.internal.InternalOrderApiClient;
 import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdInfo;
-import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdResponse;
+import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdDetailResponse;
 import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdShppInfo;
-import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindTotalPriceResponse;
 import com.ssg.sausagedutchpayapi.common.dto.SuccessResponse;
 import com.ssg.sausagedutchpayapi.common.success.SuccessCode;
 import com.ssg.sausagedutchpayapi.dutchpay.dto.response.DutchPayCalcResponse;
@@ -100,7 +99,7 @@ public class DutchPayServiceUnitTest {
         OrdFindCartShareOrdInfo orderInfo4 = OrdFindCartShareOrdInfo.builder().mbrId(4L)
                 .ordAmt(0).build();
 
-        OrdFindCartShareOrdResponse ordResponse = OrdFindCartShareOrdResponse.builder()
+        OrdFindCartShareOrdDetailResponse ordResponse = OrdFindCartShareOrdDetailResponse.builder()
                 .commAmt(25870).shppInfoList(Arrays.asList(shppInfo1, shppInfo2))
                 .ordInfoList(Arrays.asList(orderInfo1, orderInfo2, orderInfo3, orderInfo4)).build();
 

@@ -1,5 +1,7 @@
+
 package com.ssg.sausagedutchpayapi.dutchpay.dto.request;
 
+import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPayOptCd;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,8 +15,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DutchPayDtlUpdateRequest {
 
-    private List<DutchPayDtlUpdateInfo> dutchPayDtlUpdateInfoList;
+    private List<DutchPayDtlUpdateInfo> dutchPayDtlList;
 
+    private int dutchPayRmd;
 
+    private int dutchPayAmt;
+
+    private DutchPayOptCd dutchPayOptCd;
+
+    private int dutchPayDtlAmt;
 
 }

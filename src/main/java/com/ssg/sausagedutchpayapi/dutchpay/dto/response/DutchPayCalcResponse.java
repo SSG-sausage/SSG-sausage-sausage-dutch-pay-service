@@ -16,31 +16,27 @@ import lombok.NoArgsConstructor;
 @Builder(access = AccessLevel.PRIVATE)
 public class DutchPayCalcResponse {
 
-    @Schema(description = "함께쓱정산 id")
+    @Schema(description = "정산 id")
     private Long dutchPayId;
 
-    @Schema(description = "함께쓱정산 나머지")
+    @Schema(description = "정산 나머지")
     private int dutchPayRmd;
 
-    private List<DutchPayDtlCalcInfo> dutchPayDtlCalcInfoList;
+    @Schema(description = "총 정산 금액")
+    private int dutchPayAmt;
 
-    public static DutchPayCalcResponse of(Long dutchPayId, int dutchPayRmd,
+    private List<DutchPayDtlCalcInfo> dutchPayDtlList;
+
+    public static DutchPayCalcResponse of(Long dutchPayId, int dutchPayRmd, int dutchPayAmt,
             List<DutchPayDtlCalcInfo> dutchPayDtlCalcInfoList) {
         return DutchPayCalcResponse.builder()
                 .dutchPayId(dutchPayId)
                 .dutchPayRmd(dutchPayRmd)
-                .dutchPayDtlCalcInfoList(dutchPayDtlCalcInfoList)
+                .dutchPayAmt(dutchPayAmt)
+                .dutchPayDtlList(dutchPayDtlCalcInfoList)
                 .build();
     }
 
-    public static DutchPayCalcResponse of(Long dutchPayId, int dutchPayRmd, int dutchPayDtlAmt,
-            List<DutchPayDtl> dutchPayDtlList
-    ) {
-        return DutchPayCalcResponse.of(dutchPayId, dutchPayRmd,
-                dutchPayDtlList.stream().map(dutchPayDtl -> {
-                    return DutchPayDtlCalcInfo.of(dutchPayDtl, dutchPayDtlAmt);
-                }).collect(Collectors.toList())
-        );
-    }
+
 
 }

@@ -17,10 +17,4 @@ public class OrdFindCartShareOrdShppInfo {
 
     private List<Long> mbrIdList;
 
-    private int shppQuot;
-
-    public void setShppQuot(int shppQuot) {
-        this.shppQuot = shppQuot;
-    }
-
 }
