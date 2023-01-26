@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class DutchPayDtlUpdateInfo {
+public class CartShareCalDtlUpdateInfo {
 
     @Schema(description = "멤버 id")
     private Long mbrId;
 
-    @Schema(description = "멤버 정산 금액")
-    private int dutchPayDtlAmt;
+    @Schema(description = "정산 세부 금액")
+    private int calDtlAmt;
 
     @Schema(description = "배송비")
     private int shppAmt;

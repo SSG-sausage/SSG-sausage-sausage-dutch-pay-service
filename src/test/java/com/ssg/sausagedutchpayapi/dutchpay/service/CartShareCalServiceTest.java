@@ -1,7 +1,6 @@
 package com.ssg.sausagedutchpayapi.dutchpay.service;
 
 import com.ssg.sausagedutchpayapi.common.exception.ConflictException;
-import com.ssg.sausagedutchpayapi.common.exception.ForbiddenException;
 import com.ssg.sausagedutchpayapi.dutchpay.dto.request.DutchPaySaveRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-public class DutchPayServiceTest {
+public class CartShareCalServiceTest {
 
     @Autowired
-    private DutchPayService dutchPayService;
+    private CartShareCalService cartShareCalService;
 
     @Test
     @Transactional
@@ -26,11 +25,11 @@ public class DutchPayServiceTest {
                 .cartShareOrdId(2L)
                 .build();
 
-        dutchPayService.saveDutchPay(request);
+        cartShareCalService.saveDutchPay(request);
 
         // when, then
         Assertions.assertThrows(ConflictException.class, () -> {
-            dutchPayService.saveDutchPay(request);
+            cartShareCalService.saveDutchPay(request);
         });
 
     }

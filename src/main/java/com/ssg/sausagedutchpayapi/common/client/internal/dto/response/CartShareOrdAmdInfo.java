@@ -1,5 +1,4 @@
-package com.ssg.sausagedutchpayapi.dutchpay.dto.request;
-
+package com.ssg.sausagedutchpayapi.common.client.internal.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class DutchPaySaveRequest {
+public class CartShareOrdAmdInfo {
 
-    private Long cartShareOrdId;
+    private Long mbrId;
+
+    private int ordAmt;
 
 }

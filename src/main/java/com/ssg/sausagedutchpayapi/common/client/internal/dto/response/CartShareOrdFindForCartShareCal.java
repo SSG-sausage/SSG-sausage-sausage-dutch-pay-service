@@ -1,6 +1,6 @@
 package com.ssg.sausagedutchpayapi.common.client.internal.dto.response;
 
-import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class OrdFindCartShareOrdShppInfo {
+public class CartShareOrdFindForCartShareCal {
 
-    private int shppCst;
+    private Long cartShareId;
 
-    private List<Long> mbrIdList;
+    private Long mastrMbrId;
+
+    private Set<Long> mbrIdList;
+
+    private int ttlPaymtAmt;
+
+
 
 }

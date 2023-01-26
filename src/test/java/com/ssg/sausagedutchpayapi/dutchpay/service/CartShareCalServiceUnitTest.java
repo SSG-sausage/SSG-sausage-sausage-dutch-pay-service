@@ -6,17 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
-import com.ssg.sausagedutchpayapi.common.client.internal.InternalOrderApiClient;
-import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdInfo;
+import com.ssg.sausagedutchpayapi.common.client.internal.CartShareOrdApiClient;
+import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.CartShareOrdAmdInfo;
 import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdDetailResponse;
-import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.OrdFindCartShareOrdShppInfo;
+import com.ssg.sausagedutchpayapi.common.client.internal.dto.response.CartShareOrdShppInfo;
 import com.ssg.sausagedutchpayapi.common.dto.SuccessResponse;
 import com.ssg.sausagedutchpayapi.common.success.SuccessCode;
-import com.ssg.sausagedutchpayapi.dutchpay.dto.response.DutchPayCalcResponse;
+import com.ssg.sausagedutchpayapi.dutchpay.dto.response.CartShareCalFindCalResponse;
+import com.ssg.sausagedutchpayapi.dutchpay.entity.CartShareCalOptCd;
 import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPay;
-import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPayDtl;
-import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPayOptCd;
-import com.ssg.sausagedutchpayapi.dutchpay.repository.DutchPayRepository;
+import com.ssg.sausagedutchpayapi.dutchpay.entity.CartShareCalDtl;
+import com.ssg.sausagedutchpayapi.dutchpay.repository.CartShareCalRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,15 +29,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DutchPayServiceUnitTest {
+public class CartShareCalServiceUnitTest {
 
     @Mock
-    private DutchPayRepository dutchPayRepository;
+    private CartShareCalRepository cartShareCalRepository;
     @Mock
-    private InternalOrderApiClient internalOrderApiClient;
+    private CartShareOrdApiClient cartShareOrdApiClient;
 
     @InjectMocks
-    private DutchPayService dutchPayService;
+    private CartShareCalService cartShareCalService;
 
     @Test
     @DisplayName("1-1. 전체 1/N 계산 + 배송비 유료")
@@ -46,17 +46,17 @@ public class DutchPayServiceUnitTest {
         Long dutchPayId = 1L;
         Long cartShareOrdId = 100L;
         int mbrNum = 4;
-        DutchPayOptCd dutchPayOptCd = DutchPayOptCd.DIVIDE_BY_N;
+        CartShareCalOptCd cartShareCalOptCd = CartShareCalOptCd.DIVIDE_BY_N;
 
-        given(internalOrderApiClient.findCartShareOrdTotalPrice(cartShareOrdId)).willReturn(
+        given(cartShareOrdApiClient.findCartShareOrdTotalPrice(cartShareOrdId)).willReturn(
                 SuccessResponse.success(SuccessCode.OK_SUCCESS,
                         OrdFindTotalPriceResponse.builder().totalPrice(40250).build()));
 
-        given(dutchPayRepository.findById(dutchPayId)).willReturn(
+        given(cartShareCalRepository.findById(dutchPayId)).willReturn(
                 Optional.ofNullable(createDutchPay(mbrNum)));
 
         // when
-        DutchPayCalcResponse response = dutchPayService.calcDutchPay(dutchPayId, dutchPayOptCd);
+        CartShareCalFindCalResponse response = cartShareCalService.calcDutchPay(dutchPayId, cartShareCalOptCd);
 
         // then
         assertAll(() -> assertEquals(2, response.getDutchPayRmd()),
@@ -79,38 +79,38 @@ public class DutchPayServiceUnitTest {
         Long dutchPayId = 1L;
         Long cartShareOrdId = 100L;
         int mbrNum = 4;
-        DutchPayOptCd dutchPayOptCd = DutchPayOptCd.BY_SECTION;
+        CartShareCalOptCd cartShareCalOptCd = CartShareCalOptCd.BY_SECTION;
 
 
-        OrdFindCartShareOrdShppInfo shppInfo1 = OrdFindCartShareOrdShppInfo.builder()
+        CartShareOrdShppInfo shppInfo1 = CartShareOrdShppInfo.builder()
                 .shppCst(3000).mbrIdList(Arrays.asList(1L, 2L)).build();
-        OrdFindCartShareOrdShppInfo shppInfo2 = OrdFindCartShareOrdShppInfo.builder()
+        CartShareOrdShppInfo shppInfo2 = CartShareOrdShppInfo.builder()
                 .shppCst(4000).mbrIdList(Arrays.asList(1L, 2L, 3L, 4L)).build();
 
-        OrdFindCartShareOrdInfo orderInfo1 = OrdFindCartShareOrdInfo.builder().mbrId(1L)
+        CartShareOrdAmdInfo orderInfo1 = CartShareOrdAmdInfo.builder().mbrId(1L)
                 .ordAmt(9980).build();
 
-        OrdFindCartShareOrdInfo orderInfo2 = OrdFindCartShareOrdInfo.builder().mbrId(2L)
+        CartShareOrdAmdInfo orderInfo2 = CartShareOrdAmdInfo.builder().mbrId(2L)
                 .ordAmt(18890).build();
 
-        OrdFindCartShareOrdInfo orderInfo3 = OrdFindCartShareOrdInfo.builder().mbrId(3L)
+        CartShareOrdAmdInfo orderInfo3 = CartShareOrdAmdInfo.builder().mbrId(3L)
                 .ordAmt(4380).build();
 
-        OrdFindCartShareOrdInfo orderInfo4 = OrdFindCartShareOrdInfo.builder().mbrId(4L)
+        CartShareOrdAmdInfo orderInfo4 = CartShareOrdAmdInfo.builder().mbrId(4L)
                 .ordAmt(0).build();
 
         OrdFindCartShareOrdDetailResponse ordResponse = OrdFindCartShareOrdDetailResponse.builder()
                 .commAmt(25870).shppInfoList(Arrays.asList(shppInfo1, shppInfo2))
                 .ordInfoList(Arrays.asList(orderInfo1, orderInfo2, orderInfo3, orderInfo4)).build();
 
-        given(internalOrderApiClient.findCartShareOrd(cartShareOrdId)).willReturn(
+        given(cartShareOrdApiClient.findCartShareOrd(cartShareOrdId)).willReturn(
                 SuccessResponse.success(SuccessCode.OK_SUCCESS, ordResponse));
 
-        given(dutchPayRepository.findById(dutchPayId)).willReturn(
+        given(cartShareCalRepository.findById(dutchPayId)).willReturn(
                 Optional.ofNullable(createDutchPay(mbrNum)));
 
         // when
-        DutchPayCalcResponse response = dutchPayService.calcDutchPay(dutchPayId, dutchPayOptCd);
+        CartShareCalFindCalResponse response = cartShareCalService.calcDutchPay(dutchPayId, cartShareCalOptCd);
 
         // then
         assertAll(() -> assertEquals(2, response.getDutchPayRmd()),
@@ -129,15 +129,15 @@ public class DutchPayServiceUnitTest {
                 .dutchPayRmd(0).build();
 
         Long mbrId = 1L;
-        List<DutchPayDtl> dutchPayDtlList = new ArrayList<>();
+        List<CartShareCalDtl> cartShareCalDtlList = new ArrayList<>();
         for (int i = 0; i < mbrNum; i++) {
-            dutchPayDtlList.add(DutchPayDtl.newInstance(dutchPay, mbrId++));
+            cartShareCalDtlList.add(CartShareCalDtl.newInstance(dutchPay, mbrId++));
         }
 
         return DutchPay.builder()
                 .dutchPayId(1L)
                 .cartShareOrdId(100L)
-                .dutchPayDtlList(dutchPayDtlList)
+                .dutchPayDtlList(cartShareCalDtlList)
                 .build();
     }
 }

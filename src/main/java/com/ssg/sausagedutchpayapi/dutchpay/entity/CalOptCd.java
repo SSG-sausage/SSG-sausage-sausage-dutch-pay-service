@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum DutchPayOptCd {
+public enum CalOptCd {
 
     SECTION("섹션별 계산"),
 

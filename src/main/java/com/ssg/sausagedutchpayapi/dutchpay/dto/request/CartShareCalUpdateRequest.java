@@ -1,7 +1,7 @@
 
 package com.ssg.sausagedutchpayapi.dutchpay.dto.request;
 
-import com.ssg.sausagedutchpayapi.dutchpay.entity.DutchPayOptCd;
+import com.ssg.sausagedutchpayapi.dutchpay.entity.CalOptCd;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class DutchPayDtlUpdateRequest {
+public class CartShareCalUpdateRequest {
 
-    private List<DutchPayDtlUpdateInfo> dutchPayDtlList;
+    private List<CartShareCalDtlUpdateInfo> cartShareCalDtlList;
 
-    private int dutchPayRmd;
+    private int calRmd;
 
-    private int dutchPayAmt;
+    private int CalAmt;
 
-    private DutchPayOptCd dutchPayOptCd;
+    private CalOptCd calOptCd;
 
-    private int dutchPayDtlAmt;
+    private int CalDtlAmt;
 
 }
