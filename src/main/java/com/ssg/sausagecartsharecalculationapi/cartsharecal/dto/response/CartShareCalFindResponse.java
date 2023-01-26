@@ -13,10 +13,10 @@ import lombok.*;
 @Builder(access = AccessLevel.PRIVATE)
 public class CartShareCalFindResponse {
 
-    @Schema(description = "공유장바구니 정산 id")
+    @Schema(description = "공유장바구니 정산 ID")
     private Long cartShareCalId;
 
-    @Schema(description = "공유장바구니 주문 id")
+    @Schema(description = "공유장바구니 주문 ID")
     private Long cartShareOrdId;
 
     @Schema(description = "마스터여부")

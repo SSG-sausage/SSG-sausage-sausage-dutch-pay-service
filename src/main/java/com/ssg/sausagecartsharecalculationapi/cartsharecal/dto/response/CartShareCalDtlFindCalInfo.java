@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder(access = AccessLevel.PRIVATE)
 public class CartShareCalDtlFindCalInfo {
 
-    @Schema(description = "멤버 id")
+    @Schema(description = "멤버 ID")
     private Long mbrId;
 
     @Schema(description = "멤버 정산 금액")

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartShareCalDtlUpdateInfo {
 
-    @Schema(description = "멤버 id")
+    @Schema(description = "멤버 ID")
     private Long mbrId;
 
     @Schema(description = "정산 세부 금액")
