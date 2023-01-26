@@ -29,7 +29,7 @@ public class CartShareCalController {
 
     private final CartShareCalService cartShareCalService;
 
-    @Operation(summary = "[Internal] 공유장바구니 정산 생성", responses = {
+    @Operation(summary = "[internal] 공유장바구니 정산 생성", responses = {
             @ApiResponse(responseCode = "201", description = "공유장바구니 정산 생성 성공입니다."),
             @ApiResponse(responseCode = "409", description = "해당 주문에 대한 공유장바구니 정산 데이터가 이미 존재합니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
@@ -41,7 +41,7 @@ public class CartShareCalController {
                 cartShareCalService.saveCartShareCal(request));
     }
 
-    @Operation(summary = "[External] 공유장바구니 정산 조회", responses = {
+    @Operation(summary = "[external] 공유장바구니 정산 조회", responses = {
             @ApiResponse(responseCode = "200", description = "공유장바구니 정산 조회 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 공유장바구니 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
@@ -52,7 +52,7 @@ public class CartShareCalController {
                 cartShareCalService.findCartShareCal(mbrId, cartShareCalId));
     }
 
-    @Operation(summary = "[External] 공유장바구니 정산 수정", responses = {
+    @Operation(summary = "[external] 공유장바구니 정산 수정", responses = {
             @ApiResponse(responseCode = "200", description = "공유장바구니 정산 조회 성공입니다."),
             @ApiResponse(responseCode = "403", description = "공유장바구니 정산 수정 권한이 없습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 공유장바구니 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -65,7 +65,7 @@ public class CartShareCalController {
         return SuccessResponse.OK;
     }
 
-    @Operation(summary = "[External] 공유장바구니 정산 금액 계산", responses = {
+    @Operation(summary = "[external] 공유장바구니 정산 금액 계산", responses = {
             @ApiResponse(responseCode = "200", description = "정산 조회 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 정산 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
@@ -76,7 +76,7 @@ public class CartShareCalController {
                 cartShareCalService.calCartShareCalOnOptSection(cartShareCalId));
     }
 
-    @Operation(summary = "[External] 공유장바구니 정산 멤버 완료여부 변경", responses = {
+    @Operation(summary = "[external] 공유장바구니 정산 멤버 완료여부 변경", responses = {
             @ApiResponse(responseCode = "200", description = "정산 멤버 완료여부 변경 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})

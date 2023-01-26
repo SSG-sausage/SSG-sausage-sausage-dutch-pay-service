@@ -20,12 +20,12 @@ public class CartShareCalDtlUpdateInfo {
     private int calDtlAmt;
 
     @Schema(description = "배송비")
-    private int shppAmt;
+    private int shppCst;
 
     @Schema(description = "공동 금액")
     private int commAmt;
 
     @Schema(description = "개별 금액")
-    private int prAmt;
+    private int perAmt;
 
 }

@@ -19,10 +19,10 @@ public class CartShareCalUpdateRequest {
 
     private int calRmd;
 
-    private int CalAmt;
+    private int calAmt;
 
     private CalOptCd calOptCd;
 
-    private int CalDtlAmt;
+    private int calDtlAmt;
 
 }
