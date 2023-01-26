@@ -1,7 +1,7 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.dto.response;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.response;
 
-import com.ssg.sausagecartsharecalculationapi.dutchpay.entity.CalOptCd;
-import com.ssg.sausagecartsharecalculationapi.dutchpay.entity.CartShareCal;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CalOptCd;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.*;

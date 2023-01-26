@@ -1,4 +1,4 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.dto.request;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request;
 
 
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.dto.response;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;

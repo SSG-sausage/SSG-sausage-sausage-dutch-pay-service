@@ -1,6 +1,7 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.repository;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.repository;
 
-import com.ssg.sausagecartsharecalculationapi.dutchpay.entity.DutchPay;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CalOptCd;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,22 +17,19 @@ public class CartShareCalRepositoryTest {
     private CartShareCalRepository cartShareCalRepository;
 
     @Test
-    @DisplayName("공유장바구니주문 id로 함께쓱정산 조회")
+    @DisplayName("공유장바구니 주문 id로 공유장바구니 정산 조회")
     public void testFindDutchPayByCartShareOrdId() {
 
         // given
-        DutchPay dutchPay = DutchPay.builder()
-                .dutchPayId(1L)
-                .cartShareOrdId(2L)
-                .build();
-        cartShareCalRepository.save(dutchPay);
+        CartShareCal cartShareCal = CartShareCal.newInstance(10L, 20L, 0);
+        cartShareCalRepository.save(cartShareCal);
 
         // when
-        DutchPay response = cartShareCalRepository.findByCartShareOrdId(2L)
+        CartShareCal response = cartShareCalRepository.findByCartShareOrdId(10L)
                 .orElseThrow(() -> new IllegalArgumentException("Test Failed"));
 
         // then
-        Assertions.assertEquals(1L, response.getDutchPayId() );
+        Assertions.assertEquals(1L, response.getCartShareCalId());
 
     }
 

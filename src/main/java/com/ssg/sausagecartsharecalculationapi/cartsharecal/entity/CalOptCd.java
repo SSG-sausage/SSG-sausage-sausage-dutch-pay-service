@@ -1,4 +1,4 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.entity;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

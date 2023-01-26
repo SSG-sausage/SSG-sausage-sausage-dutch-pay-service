@@ -1,6 +1,6 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.repository;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.repository;
 
-import com.ssg.sausagecartsharecalculationapi.dutchpay.entity.CartShareCal;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

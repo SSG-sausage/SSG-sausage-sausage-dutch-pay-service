@@ -1,7 +1,7 @@
 
-package com.ssg.sausagecartsharecalculationapi.dutchpay.dto.request;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request;
 
-import com.ssg.sausagecartsharecalculationapi.dutchpay.entity.CalOptCd;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CalOptCd;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

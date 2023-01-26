@@ -8,4 +8,4 @@ spring:
   profiles:
     default: local
   application:
-    name: SAUSAGE-DUTCH-PAY-API
+    name: SAUSAGE-CART-SHARE-CAL-API

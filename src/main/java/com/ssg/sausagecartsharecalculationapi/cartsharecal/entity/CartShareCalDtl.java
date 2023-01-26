@@ -1,7 +1,7 @@
-package com.ssg.sausagecartsharecalculationapi.dutchpay.entity;
+package com.ssg.sausagecartsharecalculationapi.cartsharecal.entity;
 
 import com.ssg.sausagecartsharecalculationapi.common.entity.BaseEntity;
-import com.ssg.sausagecartsharecalculationapi.dutchpay.dto.request.CartShareCalDtlUpdateInfo;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request.CartShareCalDtlUpdateInfo;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
