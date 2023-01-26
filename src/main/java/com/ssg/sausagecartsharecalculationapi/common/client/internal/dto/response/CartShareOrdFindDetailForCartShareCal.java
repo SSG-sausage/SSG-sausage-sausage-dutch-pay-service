@@ -17,7 +17,7 @@ public class CartShareOrdFindDetailForCartShareCal {
 
     List<CartShareOrdShppInfo> shppInfoList;
 
-    List<CartShareOrdAmdInfo> ordInfoList;
+    List<CartShareOrdAmtInfo> ordInfoList;
 
 
 }
