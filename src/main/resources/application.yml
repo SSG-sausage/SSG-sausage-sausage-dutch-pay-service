@@ -1,10 +1,11 @@
 server:
-  port: 8083
+  port: 8084
   servlet:
     encoding:
       charset: UTF-8
       force: true
-
 spring:
   profiles:
     default: local
+  application:
+    name: SAUSAGE-CART-SHARE-CAL-API
