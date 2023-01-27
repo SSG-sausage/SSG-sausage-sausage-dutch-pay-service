@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "SAUSAGE-MEMBER-API")
-
 public interface MbrApiClient {
 
     @GetMapping(value = "/api/mbr-list", params = "mbrIdList")

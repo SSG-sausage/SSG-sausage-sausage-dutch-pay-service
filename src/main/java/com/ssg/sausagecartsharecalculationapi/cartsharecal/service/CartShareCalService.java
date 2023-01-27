@@ -1,7 +1,7 @@
 package com.ssg.sausagecartsharecalculationapi.cartsharecal.service;
 
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.MbrApiClient;
-import com.ssg.sausagecartsharecalculationapi.common.client.internal.CartShareOrdApiClient;
+import com.ssg.sausagecartsharecalculationapi.common.client.internal.OrdApiClient;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.CartShareOrdFindDetailForCartShareCal;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.CartShareOrdFindForCartShareCal;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.MbrInfo;
@@ -35,13 +35,13 @@ public class CartShareCalService {
 
     private final CartShareCalRepository cartShareCalRepository;
     private final CartShareCalDtlRepository cartShareCalDtlRepository;
-    private final CartShareOrdApiClient cartShareOrdApiClient;
+    private final OrdApiClient ordApiClient;
     private final MbrApiClient mbrApiClient;
 
     @Transactional
     public CartShareCalSaveResponse saveCartShareCal(CartShareCalSaveRequest request) {
 
-        CartShareOrdFindForCartShareCal cartShareResponse = cartShareOrdApiClient.findCartShareOrdForCartShareCal(
+        CartShareOrdFindForCartShareCal cartShareResponse = ordApiClient.findCartShareOrdForCartShareCal(
                 request.getCartShareOrdId()).getData();
 
         validateDuplicateCartShareCal(request.getCartShareOrdId());
@@ -114,7 +114,7 @@ public class CartShareCalService {
     public CartShareCalFindCalResponse calCartShareCalOnOptSection(Long cartShareCalId) {
         CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
 
-        CartShareOrdFindDetailForCartShareCal ordResponse = cartShareOrdApiClient.findCartShareOrdDetailForCartShareCal(
+        CartShareOrdFindDetailForCartShareCal ordResponse = ordApiClient.findCartShareOrdDetailForCartShareCal(
                 cartShareCal.getCartShareOrdId()).getData();
 
         HashMap<Long, MbrInfo> mbrMap = mbrApiClient.findMbrList(
