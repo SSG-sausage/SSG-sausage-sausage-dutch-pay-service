@@ -7,14 +7,14 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "CartShareOrdApiClient", url = "http://localhost:8080/api")
+@FeignClient(name = "SAUSAGE-CART-SHARE-API")
 public interface CartShareOrdApiClient {
 
-    @GetMapping("/cart-share-ord/{cartShareOrdId}")
+    @GetMapping("/api/cart-share-ord/{cartShareOrdId}")
     SuccessResponse<CartShareOrdFindForCartShareCal> findCartShareOrdForCartShareCal(
             @PathVariable Long cartShareOrdId);
 
-    @GetMapping("/cart-share-ord/{cartShareOrdId}/detail")
+    @GetMapping("/api/cart-share-ord/{cartShareOrdId}/detail")
     SuccessResponse<CartShareOrdFindDetailForCartShareCal> findCartShareOrdDetailForCartShareCal(
             @PathVariable Long cartShareOrdId);
 

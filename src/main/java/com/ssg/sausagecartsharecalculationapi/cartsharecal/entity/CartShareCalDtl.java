@@ -64,9 +64,9 @@ public class CartShareCalDtl extends BaseEntity {
 
     public void updateCalDtlAmtOnOptSection(CartShareCalDtlUpdateInfo request) {
         this.calDtlAmt = request.getCalDtlAmt();
-        this.shppCst = request.getShppAmt();
+        this.shppCst = request.getShppCst();
         this.commAmt = request.getCommAmt();
-        this.perAmt = request.getPrAmt();
+        this.perAmt = request.getPerAmt();
     }
 
     public void updateCalDtlCmplYn() {

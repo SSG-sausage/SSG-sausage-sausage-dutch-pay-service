@@ -7,11 +7,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "MbrApiClient", url = "http://localhost:8080/api")
+@FeignClient(name = "SAUSAGE-MEMBER-API")
 
 public interface MbrApiClient {
 
-    @GetMapping(value = "/mbr-list", params = "mbrIdList")
+    @GetMapping(value = "/api/mbr-list", params = "mbrIdList")
     SuccessResponse<MbrFindListResponse> findMbrList(
             @RequestParam List<Long> mbrIdList);
 

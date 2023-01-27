@@ -8,4 +8,4 @@ spring:
   profiles:
     default: local
   application:
-    name: SAUSAGE-CART-SHARE-CAL-API
+    name: SAUSAGE-CART-SHARE-CALCULATION-API

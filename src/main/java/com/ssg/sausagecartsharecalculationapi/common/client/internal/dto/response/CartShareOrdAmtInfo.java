@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class CartShareOrdAmdInfo {
+public class CartShareOrdAmtInfo {
 
     private Long mbrId;
 

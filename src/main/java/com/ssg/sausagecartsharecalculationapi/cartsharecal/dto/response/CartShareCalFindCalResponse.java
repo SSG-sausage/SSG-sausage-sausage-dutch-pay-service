@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder(access = AccessLevel.PRIVATE)
 public class CartShareCalFindCalResponse {
 
-    @Schema(description = "정산 id")
+    @Schema(description = "정산 ID")
     private Long cartShareCalId;
 
     @Schema(description = "정산 나머지")
