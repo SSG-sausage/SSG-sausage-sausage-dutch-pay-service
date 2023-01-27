@@ -1,5 +1,6 @@
 package com.ssg.sausagecartsharecalculationapi.cartsharecal.entity;
 
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request.CartShareCalSaveRequest;
 import com.ssg.sausagecartsharecalculationapi.common.entity.BaseEntity;
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request.CartShareCalUpdateRequest;
 import java.util.List;
@@ -48,15 +49,15 @@ public class CartShareCal extends BaseEntity {
     @OneToMany(mappedBy = "cartShareCal", cascade = CascadeType.ALL)
     private List<CartShareCalDtl> cartShareCalDtlList;
 
-    public static CartShareCal newInstance(Long cartShareOrdId, Long mastrMbrId, int ttlPaymtAmt) {
+    public static CartShareCal newInstance(CartShareCalSaveRequest request) {
         return CartShareCal.builder()
-                .cartShareOrdId(cartShareOrdId)
-                .mastrMbrId(mastrMbrId)
+                .cartShareOrdId(request.getCartShareOrdId())
+                .mastrMbrId(request.getMastrMbrId())
                 .calOptCd(CalOptCd.INPUT)
                 .calStYn(false)
                 .calRmd(0)
                 .calAmt(0)
-                .ttlPaymtAmt(ttlPaymtAmt)
+                .ttlPaymtAmt(request.getTtlPaymtAmt())
                 .build();
     }
 

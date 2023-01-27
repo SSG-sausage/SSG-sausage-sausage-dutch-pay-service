@@ -41,18 +41,16 @@ public class CartShareCalService {
     @Transactional
     public CartShareCalSaveResponse saveCartShareCal(CartShareCalSaveRequest request) {
 
-        CartShareOrdFindForCartShareCal cartShareResponse = ordApiClient.findCartShareOrdForCartShareCal(
-                request.getCartShareOrdId()).getData();
+//        CartShareOrdFindForCartShareCal cartShareResponse = ordApiClient.findCartShareOrdForCartShareCal(
+//                request.getCartShareOrdId()).getData();
 
         validateDuplicateCartShareCal(request.getCartShareOrdId());
 
         CartShareCal cartShareCal = cartShareCalRepository.save(
-                CartShareCal.newInstance(request.getCartShareOrdId(),
-                        cartShareResponse.getMastrMbrId(),
-                        cartShareResponse.getTtlPaymtAmt()));
+                CartShareCal.newInstance(request));
 
         cartShareCalDtlRepository.saveAll(
-                cartShareResponse.getMbrIdList().stream()
+                request.getMbrIdList().stream()
                         .map(mbrId -> CartShareCalDtl.newInstance(cartShareCal, mbrId))
                         .collect(Collectors.toList()));
         return CartShareCalSaveResponse.of(cartShareCal);

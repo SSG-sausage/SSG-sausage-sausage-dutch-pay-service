@@ -2,6 +2,7 @@ package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +17,17 @@ public class CartShareCalSaveRequest {
 
     @Schema(description = "공유장바구니 주문 ID")
     private Long cartShareOrdId;
+
+    @Schema(description = "공유장바구니 ID")
+    private Long cartShareId;
+
+    @Schema(description = "마스터멤버 ID")
+    private Long mastrMbrId;
+
+    @Schema(description = "공유장바구니멤버 ID")
+    private Set<Long> mbrIdList;
+
+    @Schema(description = "전체결제금액")
+    private int ttlPaymtAmt;
 
 }
