@@ -3,6 +3,7 @@ package com.ssg.sausagecartsharecalculationapi.common.kafka.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
 public class CartShareNotiCreateDto {
 
     @Schema(description = "멤버 ID")
@@ -22,5 +24,13 @@ public class CartShareNotiCreateDto {
 
     @Schema(description = "알림내용")
     private String cartShareNotiCntt;
+
+    public static CartShareNotiCreateDto of(Long mbrId, String notiCd, String cartShareNotiCntt){
+        return CartShareNotiCreateDto.builder()
+                .mbrId(mbrId)
+                .notiCd(notiCd)
+                .cartShareNotiCntt(cartShareNotiCntt)
+                .build();
+    }
 }
 

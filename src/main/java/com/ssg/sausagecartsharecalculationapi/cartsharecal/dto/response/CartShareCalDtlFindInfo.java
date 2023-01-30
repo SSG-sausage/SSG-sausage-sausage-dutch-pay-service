@@ -18,10 +18,10 @@ public class CartShareCalDtlFindInfo {
     private Long mbrId;
 
     @Schema(description = "공유장바구니 정산 세부 금액")
-    private int cartShareCalDtlAmt;
+    private int calDtlAmt;
 
     @Schema(description = "공유장바구니 정산 완료 여부")
-    private boolean cartShareCalDtlCmplYn;
+    private boolean calCmplYn;
 
     @Schema(description = "멤버 이름")
     private String mbrNm;
@@ -44,8 +44,8 @@ public class CartShareCalDtlFindInfo {
     public static CartShareCalDtlFindInfo of(CartShareCalDtl cartShareCalDtl, String mbrNm, Long mbrId, Long mastrMbrId) {
         return CartShareCalDtlFindInfo.builder()
                 .mbrId(cartShareCalDtl.getMbrId())
-                .cartShareCalDtlAmt(cartShareCalDtl.getCalDtlAmt())
-                .cartShareCalDtlCmplYn(cartShareCalDtl.isCalCmplYn())
+                .calDtlAmt(cartShareCalDtl.getCalDtlAmt())
+                .calCmplYn(cartShareCalDtl.isCalCmplYn())
                 .mbrNm(mbrNm)
                 .meYn(mbrId.equals(cartShareCalDtl.getMbrId()))
                 .mastrYn(cartShareCalDtl.getMbrId().equals(mastrMbrId))

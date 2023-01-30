@@ -43,12 +43,12 @@ public class CartShareCalDtl extends BaseEntity {
     @Column(name = "PER_AMT")
     private int perAmt;
 
-    public static CartShareCalDtl newInstance(CartShareCal cartShareCal, Long mbrId) {
+    public static CartShareCalDtl newInstance(CartShareCal cartShareCal, Long mbrId, boolean calCmplYn) {
         return CartShareCalDtl.builder()
                 .cartShareCal(cartShareCal)
                 .mbrId(mbrId)
                 .calDtlAmt(0)
-                .calCmplYn(false)
+                .calCmplYn(calCmplYn)
                 .shppCst(0)
                 .commAmt(0)
                 .perAmt(0)
