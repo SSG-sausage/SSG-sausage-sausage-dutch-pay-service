@@ -58,9 +58,9 @@ public class CartShareCalController {
     @Operation(summary = "[external] 공유장바구니 정산 리스트 조회", responses = {
             @ApiResponse(responseCode = "200", description = "공유장바구니 정산 리스트 조회 성공입니다."),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
-    @GetMapping("/cart-share-cal")
+    @GetMapping("/cart-share-cal/cart-share/{cartShareId}")
     public ResponseEntity<SuccessResponse<List<CartShareCalFindListResponse>>> findCartShareCalList(
-            @RequestParam Long cartShareId) {
+            @PathVariable Long cartShareId) {
         return SuccessResponse.success(SuccessCode.OK_SUCCESS,
                 cartShareCalService.findCartShareCalList(cartShareId));
     }
@@ -93,7 +93,7 @@ public class CartShareCalController {
             @ApiResponse(responseCode = "200", description = "공유장바구니 정산 멤버 완료여부 변경 성공입니다."),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 공유장바구니 정산세부 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "예상치 못한 서버 에러가 발생하였습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),})
-    @PatchMapping("/cart-share-cal/{cartShareCalId}/mbr-id/{dtlMbrId}/cmpl")
+    @PatchMapping("/cart-share-cal/{cartShareCalId}/mbr/{dtlMbrId}/cmpl")
     public ResponseEntity<SuccessResponse<String>> updateCmplYn(
             @Parameter(in = ParameterIn.HEADER) @MbrId Long mbrId,
             @PathVariable Long cartShareCalId, @PathVariable Long dtlMbrId) {

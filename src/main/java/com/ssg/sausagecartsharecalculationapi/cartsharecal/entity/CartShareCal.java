@@ -70,7 +70,7 @@ public class CartShareCal extends BaseEntity {
                 .calRmd(0)
                 .calAmt(0)
                 .cartShareNm(request.getCartShareNm())
-                .cartShareOrdNo(request.getCartShareNm())
+                .cartShareOrdNo(request.getCartShareOrdNo())
                 .ttlPaymtAmt(request.getTtlPaymtAmt())
                 .build();
     }

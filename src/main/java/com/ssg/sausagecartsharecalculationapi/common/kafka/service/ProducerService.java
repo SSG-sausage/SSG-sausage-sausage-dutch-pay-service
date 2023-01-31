@@ -26,7 +26,7 @@ public class ProducerService {
     }
 
     public void startCartShareCal(Long cartShareCalId) {
-        produceKafkaMsg(KafkaConstants.KAFKA_CART_SHARE_NOTI_CREATE, CartShareCalStartDto.of(cartShareCalId));
+        produceKafkaMsg(KafkaConstants.KAFKA_CART_SHARE_CAL_START, CartShareCalStartDto.of(cartShareCalId));
     }
 
 
