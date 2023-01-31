@@ -34,7 +34,6 @@ public class CartShareCalFindResponse {
     @Schema(description = "정산 금액")
     private int calAmt;
 
-
     @Schema(description = "결제 금액")
     private int ttlPaymtAmt;
 

@@ -1,9 +1,10 @@
 package com.ssg.sausagecartsharecalculationapi.cartsharecal.service;
 
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.response.CartShareCalFindListResponse;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.NotiCd;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.MbrApiClient;
-import com.ssg.sausagecartsharecalculationapi.common.client.internal.CartShareOrdApiClient;
+import com.ssg.sausagecartsharecalculationapi.common.client.internal.OrdApiClient;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.CartShareOrdFindDetailForCartShareCal;
-import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.CartShareOrdFindForCartShareCal;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.MbrInfo;
 import com.ssg.sausagecartsharecalculationapi.common.client.internal.dto.response.CartShareOrdShppInfo;
 import com.ssg.sausagecartsharecalculationapi.common.exception.ConflictException;
@@ -21,6 +22,8 @@ import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCal;
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCalDtl;
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.repository.CartShareCalDtlRepository;
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.repository.CartShareCalRepository;
+import com.ssg.sausagecartsharecalculationapi.common.kafka.service.ProducerService;
+import java.text.DecimalFormat;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
@@ -35,25 +38,22 @@ public class CartShareCalService {
 
     private final CartShareCalRepository cartShareCalRepository;
     private final CartShareCalDtlRepository cartShareCalDtlRepository;
-    private final CartShareOrdApiClient cartShareOrdApiClient;
+    private final OrdApiClient ordApiClient;
     private final MbrApiClient mbrApiClient;
+
+    private final ProducerService producerService;
 
     @Transactional
     public CartShareCalSaveResponse saveCartShareCal(CartShareCalSaveRequest request) {
 
-        CartShareOrdFindForCartShareCal cartShareResponse = cartShareOrdApiClient.findCartShareOrdForCartShareCal(
-                request.getCartShareOrdId()).getData();
-
         validateDuplicateCartShareCal(request.getCartShareOrdId());
 
         CartShareCal cartShareCal = cartShareCalRepository.save(
-                CartShareCal.newInstance(request.getCartShareOrdId(),
-                        cartShareResponse.getMastrMbrId(),
-                        cartShareResponse.getTtlPaymtAmt()));
+                CartShareCal.newInstance(request));
 
         cartShareCalDtlRepository.saveAll(
-                cartShareResponse.getMbrIdList().stream()
-                        .map(mbrId -> CartShareCalDtl.newInstance(cartShareCal, mbrId))
+                request.getMbrIdList().stream()
+                        .map(mbrId -> CartShareCalDtl.newInstance(cartShareCal, mbrId, request.getMastrMbrId().equals(mbrId)))
                         .collect(Collectors.toList()));
         return CartShareCalSaveResponse.of(cartShareCal);
     }
@@ -85,6 +85,7 @@ public class CartShareCalService {
 
         if (!cartShareCal.isCalStYn()) {
             cartShareCal.start();
+            producerService.startCartShareCal(cartShareCalId);
         }
 
         cartShareCal.update(request);
@@ -99,7 +100,7 @@ public class CartShareCalService {
             case SPLIT:
                 cartShareCal.getCartShareCalDtlList()
                         .forEach(cartShareCalDtl -> cartShareCalDtl.updateCalDtlAmt(
-                                request.getCalAmt()));
+                                request.getCalDtlAmt()));
                 break;
             case INPUT:
                 request.getCartShareCalDtlList().stream().forEach(
@@ -114,11 +115,12 @@ public class CartShareCalService {
     public CartShareCalFindCalResponse calCartShareCalOnOptSection(Long cartShareCalId) {
         CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
 
-        CartShareOrdFindDetailForCartShareCal ordResponse = cartShareOrdApiClient.findCartShareOrdDetailForCartShareCal(
+        CartShareOrdFindDetailForCartShareCal ordResponse = ordApiClient.findCartShareOrdDetailForCartShareCal(
                 cartShareCal.getCartShareOrdId()).getData();
 
         HashMap<Long, MbrInfo> mbrMap = mbrApiClient.findMbrList(
-                cartShareCal.getCartShareCalDtlList().stream().map(cartShareCalDtl -> cartShareCalDtl.getMbrId())
+                cartShareCal.getCartShareCalDtlList().stream()
+                        .map(cartShareCalDtl -> cartShareCalDtl.getMbrId())
                         .collect(Collectors.toList())).getData().getMbrMap();
 
         int mbrNum = cartShareCal.getCartShareCalDtlList().size();
@@ -143,7 +145,8 @@ public class CartShareCalService {
         }
         ;
 
-        return CartShareCalFindCalResponse.of(cartShareCal.getCartShareCalId(), calRmd, cartShareCal.getTtlPaymtAmt(),
+        return CartShareCalFindCalResponse.of(cartShareCal.getCartShareCalId(), calRmd,
+                cartShareCal.getTtlPaymtAmt(),
                 infoList);
     }
 
@@ -153,7 +156,8 @@ public class CartShareCalService {
         CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
         validateMaster(mbrId, cartShareCal.getMastrMbrId());
 
-        CartShareCalDtl cartShareCalDtl = findCartShareCalDtlByMbrIdAndCartShareCalId(dtlMbrId, cartShareCalId);
+        CartShareCalDtl cartShareCalDtl = findCartShareCalDtlByMbrIdAndCartShareCalId(dtlMbrId,
+                cartShareCalId);
         cartShareCalDtl.updateCalDtlCmplYn();
     }
 
@@ -205,9 +209,9 @@ public class CartShareCalService {
     }
 
     private CartShareCalDtl findCartShareCalDtlByMbrIdAndCartShareCalId(Long mbrId,
-            Long cartShareCalId){
+            Long cartShareCalId) {
 
-        return cartShareCalDtlRepository.findCartShareCalDtlByMbrIdAndCartShareCalCartShareCalId(mbrId,
+        return cartShareCalDtlRepository.findByMbrIdAndCartShareCalCartShareCalId(mbrId,
                         cartShareCalId)
                 .orElseThrow(
                         () -> new NotFoundException(
@@ -217,4 +221,33 @@ public class CartShareCalService {
     }
 
 
+    public void saveCartShareNoti(Long mbrId, Long cartShareCalId) {
+        CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
+        cartShareCalDtlRepository.findAllByCartShareCalCartShareCalIdAndCalCmplYn(cartShareCalId,
+                false).forEach(cartShareCalDtl -> {
+
+            producerService.createCartShareNoti(cartShareCalDtl.getMbrId(),
+                    NotiCd.CART_SHARE_CAL.name(),createNotiCntt(cartShareCal, cartShareCalDtl));
+        });
+
+    }
+
+    private String createNotiCntt(CartShareCal cartShareCal, CartShareCalDtl cartShareCalDtl) {
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        StringBuilder cnttBuilder = new StringBuilder();
+
+        String cartShareNm = "소시지";
+        cnttBuilder.append(String.format("'%s' 장바구니의 마스터가 정산 요청을 했습니다.\n",cartShareNm));
+        cnttBuilder.append(String.format("\n결제 금액 : %s원\n", decFormat.format(cartShareCal.getTtlPaymtAmt())));
+        cnttBuilder.append(String.format("총 정산 금액 : %s원\n",decFormat.format(cartShareCal.getCalAmt())));
+        cnttBuilder.append(String.format("\n요청 금액 : %s원\n",decFormat.format(cartShareCalDtl.getCalDtlAmt())));
+
+        return cnttBuilder.toString();
+    }
+
+    public List<CartShareCalFindListResponse> findCartShareCalList(Long cartShareId) {
+        return cartShareCalRepository.findAllByCartShareIdAndCalStYn(cartShareId, true).stream().map(CartShareCalFindListResponse::of).collect(
+                Collectors.toList());
+    }
 }

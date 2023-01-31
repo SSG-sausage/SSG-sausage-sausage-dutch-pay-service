@@ -34,6 +34,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     implementation("com.querydsl:querydsl-apt")
 
+    implementation 'org.springframework.kafka:spring-kafka'
+
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.14'
