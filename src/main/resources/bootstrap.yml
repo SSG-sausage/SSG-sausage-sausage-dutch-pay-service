@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: sausage-cart-share-calculation-api
+      profile: local
