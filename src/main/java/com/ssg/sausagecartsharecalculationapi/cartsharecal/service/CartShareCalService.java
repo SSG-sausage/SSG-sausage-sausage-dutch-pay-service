@@ -237,8 +237,7 @@ public class CartShareCalService {
 
         StringBuilder cnttBuilder = new StringBuilder();
 
-        String cartShareNm = "소시지";
-        cnttBuilder.append(String.format("'%s' 장바구니의 마스터가 정산 요청을 했습니다.\n",cartShareNm));
+        cnttBuilder.append(String.format("'%s' 장바구니의 마스터가 정산 요청을 했습니다.\n",cartShareCal.getCartShareNm()));
         cnttBuilder.append(String.format("\n결제 금액 : %s원\n", decFormat.format(cartShareCal.getTtlPaymtAmt())));
         cnttBuilder.append(String.format("총 정산 금액 : %s원\n",decFormat.format(cartShareCal.getCalAmt())));
         cnttBuilder.append(String.format("\n요청 금액 : %s원\n",decFormat.format(cartShareCalDtl.getCalDtlAmt())));
