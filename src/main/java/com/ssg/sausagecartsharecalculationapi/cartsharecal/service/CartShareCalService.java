@@ -246,7 +246,7 @@ public class CartShareCalService {
     }
 
     public List<CartShareCalFindListResponse> findCartShareCalList(Long cartShareId) {
-        return cartShareCalRepository.findAllByCartShareIdAndCalStYn(cartShareId, true).stream().map(CartShareCalFindListResponse::of).collect(
+        return cartShareCalRepository.findAllByCartShareIdAndCalStYnOrderByCartShareCalStDtsDesc(cartShareId, true).stream().map(CartShareCalFindListResponse::of).collect(
                 Collectors.toList());
     }
 }
