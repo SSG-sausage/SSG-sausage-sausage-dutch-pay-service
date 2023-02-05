@@ -10,5 +10,5 @@ public interface CartShareCalRepository extends JpaRepository<CartShareCal, Long
 
     Optional<CartShareCal> findByCartShareOrdId(Long cartShareOrdId);
 
-    List<CartShareCal> findAllByCartShareIdAndCalStYn(Long cartShareId, boolean calStYn);
+    List<CartShareCal> findAllByCartShareIdAndCalStYnOrderByCartShareCalStDtsDesc(Long cartShareId, boolean calStYn);
 }
