@@ -2,7 +2,11 @@ package com.ssg.sausagecartsharecalculationapi.cartsharecal.service;
 
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request.CartShareCalSaveRequest;
 import com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.response.CartShareCalSaveResponse;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CalOptCd;
+import com.ssg.sausagecartsharecalculationapi.cartsharecal.entity.CartShareCal;
 import com.ssg.sausagecartsharecalculationapi.common.exception.ConflictException;
+import java.time.LocalDateTime;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,11 +23,16 @@ public class CartShareCalServiceTest {
     @Test
     @Transactional
     @DisplayName("공유장바구니 정산 생성")
-    public void testSaveDutchPay() {
+    public void testSaveCartShareCal() {
 
         // given
         CartShareCalSaveRequest request = CartShareCalSaveRequest.builder()
                 .cartShareOrdId(10L)
+                .cartShareId(20L)
+                .mastrMbrId(30L)
+                .cartShareNm("")
+                .cartShareOrdNo("")
+                .mbrIdList(Set.of(30L, 31L))
                 .build();
 
         // when
@@ -37,12 +46,17 @@ public class CartShareCalServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("함께쓱정산 중복 생성 에러")
-    public void testSaveDutchPayDuplicate() {
+    @DisplayName("공유장바구니 정산 중복 생성 에러")
+    public void testSaveCartShareCalDuplicate() {
 
         // given
         CartShareCalSaveRequest request = CartShareCalSaveRequest.builder()
                 .cartShareOrdId(10L)
+                .cartShareId(20L)
+                .mastrMbrId(30L)
+                .cartShareNm("")
+                .cartShareOrdNo("")
+                .mbrIdList(Set.of(30L, 31L))
                 .build();
 
         cartShareCalService.saveCartShareCal(request);
