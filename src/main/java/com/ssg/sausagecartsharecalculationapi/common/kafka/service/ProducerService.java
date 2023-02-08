@@ -7,6 +7,7 @@ import com.ssg.sausagecartsharecalculationapi.common.exception.InternalServerExc
 import com.ssg.sausagecartsharecalculationapi.common.kafka.constant.KafkaConstants;
 import com.ssg.sausagecartsharecalculationapi.common.kafka.dto.CartShareCalStartDto;
 import com.ssg.sausagecartsharecalculationapi.common.kafka.dto.CartShareNotiCreateDto;
+import com.ssg.sausagecartsharecalculationapi.common.kafka.dto.CartShareOrdCartShareCalIdUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -29,6 +30,9 @@ public class ProducerService {
         produceKafkaMsg(KafkaConstants.KAFKA_CART_SHARE_CAL_START, CartShareCalStartDto.of(cartShareCalId));
     }
 
+    public void updateCartShareCalId(Long cartShareOrdId, Long cartShareCalId) {
+        produceKafkaMsg(KafkaConstants.KAFKA_CART_SHARE_CAL_ID_UPDATE, CartShareOrdCartShareCalIdUpdateDto.of(cartShareOrdId,cartShareCalId));
+    }
 
     public void produceKafkaMsg(String topicNm, Object object) {
         try {
