@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class ConsumeService {
+public class ConsumerService {
 
     private final CartShareCalService cartShareCalService;
 
