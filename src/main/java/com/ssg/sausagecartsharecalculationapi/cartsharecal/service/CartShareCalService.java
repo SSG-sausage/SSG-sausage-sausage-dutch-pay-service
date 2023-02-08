@@ -53,7 +53,8 @@ public class CartShareCalService {
 
         cartShareCalDtlRepository.saveAll(
                 request.getMbrIdList().stream()
-                        .map(mbrId -> CartShareCalDtl.newInstance(cartShareCal, mbrId, request.getMastrMbrId().equals(mbrId)))
+                        .map(mbrId -> CartShareCalDtl.newInstance(cartShareCal, mbrId,
+                                request.getMastrMbrId().equals(mbrId)))
                         .collect(Collectors.toList()));
         return CartShareCalSaveResponse.of(cartShareCal);
     }
@@ -162,12 +163,20 @@ public class CartShareCalService {
     }
 
     @Transactional
-    public void retrySaveCartShareCal(CartShareCalSaveRequest request){
-        Long cartShareCalId = saveCartShareCal(request).getCartShareCalId();
+    public void retrySaveCartShareCal(CartShareCalSaveRequest request) {
 
-        CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
+        CartShareCal cartShareCal;
 
-        producerService.updateCartShareCalId(cartShareCal.getCartShareOrdId(),cartShareCal.getCartShareCalId());
+        try {
+            cartShareCal = findCartShareCalById(saveCartShareCal(request).getCartShareCalId());
+
+        } catch (ConflictException e) {
+
+            cartShareCal = findCartShareCalByCartShareOrdId(request.getCartShareOrdId());
+        }
+
+        producerService.updateCartShareCalId(cartShareCal.getCartShareOrdId(),
+                cartShareCal.getCartShareCalId());
 
     }
 
@@ -237,7 +246,7 @@ public class CartShareCalService {
                 false).forEach(cartShareCalDtl -> {
 
             producerService.createCartShareNoti(cartShareCalDtl.getMbrId(),
-                    NotiCd.CART_SHARE_CAL.name(),createNotiCntt(cartShareCal, cartShareCalDtl));
+                    NotiCd.CART_SHARE_CAL.name(), createNotiCntt(cartShareCal, cartShareCalDtl));
         });
 
     }
@@ -247,16 +256,21 @@ public class CartShareCalService {
 
         StringBuilder cnttBuilder = new StringBuilder();
 
-        cnttBuilder.append(String.format("'%s' 장바구니의 마스터가 정산 요청을 했습니다.\n",cartShareCal.getCartShareNm()));
-        cnttBuilder.append(String.format("\n결제 금액 : %s원\n", decFormat.format(cartShareCal.getTtlPaymtAmt())));
-        cnttBuilder.append(String.format("총 정산 금액 : %s원\n",decFormat.format(cartShareCal.getCalAmt())));
-        cnttBuilder.append(String.format("\n요청 금액 : %s원\n",decFormat.format(cartShareCalDtl.getCalDtlAmt())));
+        cnttBuilder.append(
+                String.format("'%s' 장바구니의 마스터가 정산 요청을 했습니다.\n", cartShareCal.getCartShareNm()));
+        cnttBuilder.append(
+                String.format("\n결제 금액 : %s원\n", decFormat.format(cartShareCal.getTtlPaymtAmt())));
+        cnttBuilder.append(
+                String.format("총 정산 금액 : %s원\n", decFormat.format(cartShareCal.getCalAmt())));
+        cnttBuilder.append(
+                String.format("\n요청 금액 : %s원\n", decFormat.format(cartShareCalDtl.getCalDtlAmt())));
 
         return cnttBuilder.toString();
     }
 
     public List<CartShareCalFindListResponse> findCartShareCalList(Long cartShareId) {
-        return cartShareCalRepository.findAllByCartShareIdAndCalStYnOrderByCartShareCalStDtsDesc(cartShareId, true).stream().map(CartShareCalFindListResponse::of).collect(
+        return cartShareCalRepository.findAllByCartShareIdAndCalStYnOrderByCartShareCalStDtsDesc(
+                cartShareId, true).stream().map(CartShareCalFindListResponse::of).collect(
                 Collectors.toList());
     }
 }
