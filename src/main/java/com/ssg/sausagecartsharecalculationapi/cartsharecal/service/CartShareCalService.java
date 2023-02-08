@@ -161,6 +161,16 @@ public class CartShareCalService {
         cartShareCalDtl.updateCalDtlCmplYn();
     }
 
+    @Transactional
+    public void retrySaveCartShareCal(CartShareCalSaveRequest request){
+        Long cartShareCalId = saveCartShareCal(request).getCartShareCalId();
+
+        CartShareCal cartShareCal = findCartShareCalById(cartShareCalId);
+
+        producerService.updateCartShareCalId(cartShareCal.getCartShareOrdId(),cartShareCal.getCartShareCalId());
+
+    }
+
     private int getQt(int x, int y) {
         if (x <= 0 || y <= 0) {
             return 0;

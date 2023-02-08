@@ -1,6 +1,7 @@
 package com.ssg.sausagecartsharecalculationapi.cartsharecal.dto.request;
 
 
+import com.ssg.sausagecartsharecalculationapi.common.kafka.dto.CartShareCalRetryDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -35,5 +36,17 @@ public class CartShareCalSaveRequest {
 
     @Schema(description = "전체결제금액")
     private int ttlPaymtAmt;
+
+    public static CartShareCalSaveRequest of(CartShareCalRetryDto cartShareCalRetryDto){
+        return CartShareCalSaveRequest.builder()
+                .cartShareOrdId(cartShareCalRetryDto.getCartShareOrdId())
+                .cartShareId(cartShareCalRetryDto.getCartShareId())
+                .mastrMbrId(cartShareCalRetryDto.getMastrMbrId())
+                .cartShareNm(cartShareCalRetryDto.getCartShareNm())
+                .cartShareOrdNo(cartShareCalRetryDto.getCartShareOrdNo())
+                .mbrIdList(cartShareCalRetryDto.getMbrIdList())
+                .ttlPaymtAmt(cartShareCalRetryDto.getTtlPaymtAmt())
+                .build();
+    }
 
 }
